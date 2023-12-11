@@ -42,5 +42,11 @@ module.exports = {
     'react/jsx-no-useless-fragment': 0,
     'react/self-closing-comp': 0,
     'import/order': 0,
+    'no-empty-pattern': 0,
+    'no-else-return': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react-hooks/exhaustive-deps': 0,
+    'no-unneeded-ternary': 0,
+    'react/jsx-no-target-blank': 0,
   },
 }

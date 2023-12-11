@@ -24,6 +24,7 @@ export default defineConfig({
       "@/types": resolve(root, "types"),
       "@/utils": resolve(root, "utils"),
       "@/fonts": resolve(root, "fonts"),
+      "@/middleware": resolve(root, "middleware"),
     }
   }
 

@@ -1,5 +1,13 @@
 export const enum DefaultPaths {
-    AUTH = '/auth/*',
     DASHBOARD = '/*',
     UNAUTHORIZED = '/unauthorized',
+}
+export const enum ErrorPaths {
+    UNAUTHORIZED = '/unauthorized',
+    NOTFOUND = '*'
+}
+export const enum AuthPaths {
+    LOGIN = '/login',
+    FORGOT_PASSWORD = '/forget-password',
+    NOTFOUND = '*'
 }

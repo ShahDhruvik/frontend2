@@ -29,6 +29,7 @@
       "@/types/*": ["./src/types/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/fonts/*": ["./src/fonts/*"],
+      "@/middleware/*": ["./src/middleware/*"],
     }
   },
   "include": [
