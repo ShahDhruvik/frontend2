@@ -23,6 +23,7 @@ export default defineConfig({
       "@/theme": resolve(root, "theme"),
       "@/types": resolve(root, "types"),
       "@/utils": resolve(root, "utils"),
+      "@/fonts": resolve(root, "fonts"),
     }
   }
 

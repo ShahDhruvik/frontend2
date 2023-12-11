@@ -1,9 +1,18 @@
 
 export enum PaletteColors {
-    blue = '#00a1f1',
-    darkBlue = '#0c1d38',
-    red = '#a31d14'
-}
+    blue = '#3498db',
+    white = '#ffffff',
+    black = '#000000',
+    gray = '#808080',
+    green = '#2ecc71',
+    red = '#e74c3c',
+    yellow = '#f1c40f',
+    orange = '#e67e22',
+    purple = '#9b59b6',
+    teal = '#008080',
+    pink = '#e91e63',
+    brown = '#a52a2a'
+};
 export const generatePalette = (paletteColors: Record<string, string>) => {
     const colorPalette: Record<string, { main: string; light: string; dark: string }> = {}
     for (let i = 0; i < Object.keys(paletteColors).length; i++) {
