@@ -19,13 +19,25 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/components/*": ["./src/components/*"],
+      "@/styles/*": ["./src/styles/*"],
       "@/assets/*": ["./src/assets/*"],
+      "@/context/*": ["./src/context/*"],
+      "@/theme/*": ["./src/theme/*"],
       "@/types/*": ["./src/types/*"],
-    },
+      "@/utils/*": ["./src/utils/*"],
+     
+    }
   },
-  "include": ["src",".eslintrc.cjs","vite.config.ts","vite.end.d.ts"],
+  "include": [
+    "src",
+    ".eslintrc.cjs",
+    "vite.config.ts",
+    "vite.end.d.ts",
+    "tailwind.config.js",
+    "postcss.config.js"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
