@@ -48,5 +48,10 @@ module.exports = {
     'react-hooks/exhaustive-deps': 0,
     'no-unneeded-ternary': 0,
     'react/jsx-no-target-blank': 0,
+    'react/jsx-curly-brace-presence': 0,
+    'react/jsx-boolean-value': 0,
+    'react/jsx-no-duplicate-props': 0,
+    'object-shorthand': 0,
+    'react/require-default-props': 0,
   },
 }

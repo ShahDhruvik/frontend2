@@ -1,9 +1,14 @@
-import React from 'react'
+import Com from '@/components/com'
 
 type Props = {}
 
 const MainPage = (props: Props) => {
-  return <div>MainPage</div>
+  return (
+    <>
+      <div>MainPage</div>
+      <Com />
+    </>
+  )
 }
 
 export default MainPage
