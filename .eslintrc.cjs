@@ -53,5 +53,7 @@ module.exports = {
     'react/jsx-no-duplicate-props': 0,
     'object-shorthand': 0,
     'react/require-default-props': 0,
+    'no-nested-ternary': 0,
+    'no-useless-return': 0,
   },
 }

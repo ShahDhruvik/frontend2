@@ -4,6 +4,7 @@ export enum PaletteColors {
     white = '#ffffff',
     black = '#000000',
     gray = '#808080',
+    lightGray = '#bdbdbd',
     green = '#2ecc71',
     red = '#e74c3c',
     yellow = '#f1c40f',

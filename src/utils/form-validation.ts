@@ -1,3 +1,5 @@
+import { ValidationMessage } from "./message"
+
 export const acDefaultValue = { label: 'Select', _id: '00' }
 export const numberFieldValidation = (
     isRequired: boolean,
@@ -7,44 +9,46 @@ export const numberFieldValidation = (
     switch (type) {
         case 'Phone':
             return {
-                ...(isRequired && { required: 'required.' }),
-                min: { value: 0, message: 'Only positive integers allowed' },
+                ...(isRequired && { required: ValidationMessage.Required }),
+                min: { value: 0, message: ValidationMessage.PositiveInteger },
                 minLength: {
                     value: 10,
-                    message: '10 digits are allowed',
+                    message: ValidationMessage.TenDigits,
                 },
                 maxLength: {
                     value: 10,
-                    message: '10 digits are allowed',
+                    message: ValidationMessage.TenDigits,
                 },
             }
         case 'Days':
             return {
-                ...(isRequired && { required: 'required.' }),
-                min: { value: 1, message: 'Must be greater than 0' },
+                ...(isRequired && { required: ValidationMessage.Required }),
+                min: { value: 1, message: ValidationMessage.GreaterThanZero },
             }
         case 'PinCode':
             return {
-                ...(isRequired && { required: 'required.' }),
-                min: { value: 0, message: 'Only positive integers allowed' },
+                ...(isRequired && { required: ValidationMessage.Required }),
+                min: { value: 0, message: ValidationMessage.PositiveInteger },
                 minLength: {
                     value: 6,
-                    message: '6 digits are allowed',
+                    message: ValidationMessage.SixDigits,
                 },
                 maxLength: {
                     value: 6,
-                    message: '6 digits are allowed',
+                    message: ValidationMessage.SixDigits,
                 },
             }
         default:
             return {
-                ...(isRequired && { required: 'required.' }),
-                minLength: { value: 1, message: 'Atleast 1 digits are required' },
-                maxLength: {
-                    value: length ?? 20,
-                    message: `Atmost ${length ?? 20} digits are required`,
-                },
-                min: { value: 1, message: 'Must be greater than 0' },
+                ...(isRequired && { required: ValidationMessage.Required }),
+                minLength: { value: 1, message: ValidationMessage.OneDigit },
+                ...(length && {
+                    maxLength: {
+                        value: length,
+                        message: `${ValidationMessage.AtMostDigits} ${length}.`,
+                    }
+                }),
+                min: { value: 1, message: ValidationMessage.GreaterThanZero },
             }
     }
 }
@@ -52,14 +56,14 @@ export const numberFieldValidation = (
 export const searchSelectValidation = (label: string, notRequired?: boolean) => {
     return !notRequired ? {
         validate: (value: any) => {
-            return value?._id !== acDefaultValue?._id || `Select ${label}`
+            return value?._id !== acDefaultValue?._id || `${ValidationMessage.Select} ${label}`
         },
     } : {}
 }
 export const dateSelectValidation = (name: string) => {
     return {
         validate: (value: any) => {
-            return value !== null || `Select ${name}`
+            return value !== null || `${ValidationMessage.Select} ${name}`
         },
     }
 }
@@ -68,64 +72,58 @@ export const txtFieldValidation = (
     type?:
         | 'txtArea'
         | 'Email'
-        | 'Description'
         | 'ShortName'
         | 'multiEmail'
         | 'Password'
         | 'PositiveNumbers',
     fieldLength?: number,
+    maxLength?: number,
 ) => {
     switch (type) {
-        case 'txtArea':
-            return {
-                ... (isRequired && { required: 'required.' }),
-                minLength: { value: 3, message: 'Minimum 3 characters' },
-                maxLength: {
-                    value: 100,
-                    message: 'Maximum 100 characters allowed',
-                },
-            }
+
         case 'ShortName':
             return {
-                ...(isRequired && { required: 'required.' }),
-                minLength: { value: 3, message: 'Minimum 3 characters' },
+                ...(isRequired && { required: ValidationMessage.Required }),
+                minLength: { value: 1, message: ValidationMessage.MinOneCharacter },
                 maxLength: {
                     value: 5,
-                    message: 'Maximum 5 characters allowed',
+                    message: ValidationMessage.MaxFiveCharacters,
                 },
             }
-        case 'Description':
+        case 'txtArea':
             return {
-                ...(isRequired && { required: 'required.' }),
-                minLength: { value: 1, message: 'Minimum 1 characters' },
-                // maxLength: {
-                //   value: 300,
-                //   message: 'Maximum 300 characters allowed',
-                // },
+                ... (isRequired && { required: ValidationMessage.Required }),
+                minLength: { value: 1, message: ValidationMessage.MinOneCharacter },
+                ...(maxLength && {
+                    maxLength: {
+                        value: maxLength,
+                        message: `${ValidationMessage.MaxCharacters} ${maxLength}`,
+                    }
+                }),
             }
         case 'Email':
             return {
-                ...(isRequired && { required: 'required.' }),
+                ...(isRequired && { required: ValidationMessage.Required }),
                 pattern: {
                     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                    message: 'Please enter correct email ID',
+                    message: ValidationMessage.Email,
                 },
             }
         case 'Password':
             return {
-                ...(isRequired && { required: 'required.' }),
+                ...(isRequired && { required: ValidationMessage.Required }),
                 pattern: {
                     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                     message:
-                        'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, one number and one special character',
+                        ValidationMessage.Password,
                 },
             }
         case 'PositiveNumbers':
             return {
-                ...(isRequired && { required: 'required.' }),
+                ...(isRequired && { required: ValidationMessage.Required }),
                 pattern: {
                     value: /^^(0|[1-9][0-9]{0,9})$/,
-                    message: 'Only positive integers are allowed',
+                    message: ValidationMessage.PositiveInteger,
                 },
             }
         case 'multiEmail':
@@ -133,19 +131,24 @@ export const txtFieldValidation = (
                 ...(isRequired && {
                     required: {
                         value: fieldLength === 0,
-                        message: 'required.',
+                        message: ValidationMessage.Required,
                     }
                 }),
                 pattern: {
                     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                    message: 'Please enter correct email ID',
+                    message: ValidationMessage.Email,
                 },
             }
         default:
             return {
-                ...(isRequired && { required: 'required.' }),
-                minLength: { value: 1, message: 'Minimum 1 characters' },
-                maxLength: { value: 100, message: 'Maximum 100 characters allowed' },
+                ...(isRequired && { required: ValidationMessage.Required }),
+                minLength: { value: 1, message: ValidationMessage.MinOneCharacter },
+                ...(maxLength && {
+                    maxLength: {
+                        value: maxLength,
+                        message: `${ValidationMessage.MaxCharacters} ${maxLength}`,
+                    }
+                }),
             }
     }
 }
