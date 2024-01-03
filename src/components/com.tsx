@@ -8,6 +8,9 @@ import CheckInput from './form-inputs/checkInput'
 import AvatarFileInput from './form-inputs/AvatarInput'
 import { DateInput } from './form-inputs/DateInput'
 import FileSelectInput from './form-inputs/FileInput'
+import { BreakPoints, ThemeOperator, generateBreakPoints } from '@/theme/theme-data'
+import axiosInstance from '@/axiosInstance'
+import { insert } from '@/lib/post'
 
 type Props = {}
 
@@ -53,7 +56,7 @@ const Com = (props: Props) => {
         maxWidth={500}
         m={2}
       >
-        <form onSubmit={handleSubmit(onSubmitHandle)} className='flex flex-col gap-5'>
+        <form onSubmit={handleSubmit(onSubmitHandle)} className='flex flex-col gap-5 '>
           <TxtInput
             label='Name'
             placeholder='Enter name'
@@ -61,6 +64,7 @@ const Com = (props: Props) => {
             handleChange={() => {}}
             name='firstName'
             validation={txtFieldValidation(true)}
+            sx={{}}
           />
           <DateInput
             label='Date'
@@ -99,16 +103,32 @@ const Com = (props: Props) => {
             validation={{ isRequired: true, maxLength: 3 }}
             trigger={trigger}
           />
-          <Button
+          {/* <Button
             color='blue'
             variant='contained'
             sx={{ color: theme.palette.white.main }}
             type='submit'
           >
             Submit
-          </Button>
+          </Button> */}
         </form>
       </Box>
+      <Button
+        color='blue'
+        variant='contained'
+        sx={{ color: theme.palette.white.main }}
+        type='button'
+        onClick={async (e) => {
+          e.preventDefault()
+          const data = await insert({
+            title: 'foo',
+            body: 'bar',
+            userId: 1,
+          })
+        }}
+      >
+        send post
+      </Button>
     </>
   )
 }

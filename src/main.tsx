@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './Aap'
+import App from '@/app'
 import { DarkProvider } from './context/darkContext'
 import '@/styles/global.css'
 import AppThemeProvider from './context/themeContext'

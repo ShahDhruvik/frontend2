@@ -55,5 +55,10 @@ module.exports = {
     'react/require-default-props': 0,
     'no-nested-ternary': 0,
     'no-useless-return': 0,
+    'no-case-declarations': 0,
+    '@typescript-eslint/naming-convention': 0,
+    'no-param-reassign': 0,
+    'consistent-return': 0,
+    'spaced-comment': 0,
   },
 }

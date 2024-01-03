@@ -1,4 +1,4 @@
-import { PaletteColors } from "src/theme/palette"
+import { BreakPoints, PaletteColors } from "@/theme/theme-data"
 
 export type DynamicPaletteOptions = {
     [K in keyof typeof PaletteColors]: {
@@ -9,6 +9,9 @@ export type DynamicPaletteOptions = {
 };
 export type DynamicButtonPaletteOptions = {
     [K in keyof typeof PaletteColors]: true
+};
+export type DynamicBreakPointsOptions = {
+    [K in keyof typeof BreakPoints]: true
 };
 
 declare module '@mui/material/styles' {
@@ -22,4 +25,8 @@ declare module '@mui/material/Button' {
         dashed: true
     }
     interface ButtonPropsColorOverrides extends DynamicButtonPaletteOptions { }
+}
+
+declare module '@mui/material/styles' {
+    interface BreakpointOverrides extends DynamicBreakPointsOptions { }
 }

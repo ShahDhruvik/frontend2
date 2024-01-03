@@ -21,7 +21,11 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./",
     "paths": {
+      "@/axiosInstance": ["./src/axiosInstance"],
+      "@/appRoutes": ["./src/AppRoutes"],
+      "@/app": ["./src/App"],
       "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/assets/*": ["./src/assets/*"],
       "@/context/*": ["./src/context/*"],

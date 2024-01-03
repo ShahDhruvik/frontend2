@@ -1,5 +1,5 @@
-export type COMMON = {
-    _id: string,
-    name: string
+export type RequestMethods = {
+    Get: 'get',
+    Post: 'post'
 }
 

@@ -16,7 +16,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@/axiosInstance": resolve(root, "axiosInstance"),
+      "@/appRoutes": resolve(root, "AppRoutes"),
+      "@/app": resolve(root, "App"),
       "@/components": resolve(root, "components"),
+      "@/lib": resolve(root, "lib"),
       "@/styles": resolve(root, "styles"),
       "@/assets": resolve(root, "assets"),
       "@/context": resolve(root, "context"),

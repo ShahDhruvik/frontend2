@@ -1,7 +1,5 @@
-
-
 import { createTheme, Theme } from '@mui/material/styles'
-import { generatePalette, PaletteColors } from './palette'
+import { BreakPoints, generateBreakPoints, generatePalette, PaletteColors, ThemeOperator } from './theme-data'
 import { DynamicPaletteOptions } from '@/types/mui.types'
 
 const theme: Theme = createTheme({
@@ -12,6 +10,7 @@ const theme: Theme = createTheme({
             'serif',
         ].join(','),
     },
+    breakpoints: generateBreakPoints(ThemeOperator.MuiOp, BreakPoints) as Record<string, number>,
     components: {
         MuiButton: {
             styleOverrides: {

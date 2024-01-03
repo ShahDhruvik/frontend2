@@ -45,8 +45,13 @@ const FileSelectInput = ({
   const handleFileChange = (event: any) => {
     const selectedFile = event.target.files[0]
     if (selectedFile) {
-      setFiles([...files, { document: selectedFile }])
-      setValue(name, [...files, selectedFile])
+      const file = files.find((f) => f === selectedFile)
+      if (file) {
+        uploadInputRef.current.value = null
+      } else {
+        setFiles([...files, { document: selectedFile }])
+        setValue(name, [...files, selectedFile])
+      }
     }
     trigger(name)
   }

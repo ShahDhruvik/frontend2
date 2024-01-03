@@ -1,6 +1,6 @@
 // Common messages are declared here
 export enum CommonMessage {
-    SUCCESS = 'Success'
+    Success = 'Success'
 }
 export enum ValidationMessage {
     CheckInput = 'Above checkbox is required*',
