@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from 'react'
 import { AuthParams, User } from '@/types/context-types/auth.types'
+import { ContextMessage } from '@/utils/message'
 
 interface AuthContextType {
   authParams: AuthParams | undefined
@@ -47,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext)
   if (!context) {
-    throw new Error('useLoading must be used within LoadingProvider')
+    throw new Error(ContextMessage.AuthMessage)
   }
   return context
 }

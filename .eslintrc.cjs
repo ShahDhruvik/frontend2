@@ -60,5 +60,6 @@ module.exports = {
     'no-param-reassign': 0,
     'consistent-return': 0,
     'spaced-comment': 0,
+    'no-lonely-if': 0,
   },
 }

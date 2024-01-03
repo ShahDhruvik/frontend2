@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from '@/app'
 import { DarkProvider } from './context/darkContext'
 import '@/styles/global.css'
+import '@/styles/spinner.css'
 import AppThemeProvider from './context/themeContext'
 import { AuthProvider } from './context/authContext'
 import { BrowserRouter } from 'react-router-dom'
+import { LoadingProvider } from './context/lodaingContext'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -13,7 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <AuthProvider>
         <DarkProvider>
           <AppThemeProvider>
-            <App />
+            <LoadingProvider>
+              <App />
+            </LoadingProvider>
           </AppThemeProvider>
         </DarkProvider>
       </AuthProvider>

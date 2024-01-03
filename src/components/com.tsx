@@ -1,6 +1,6 @@
 import theme from '@/theme/defaultTheme'
 import { Box, Button, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import TxtInput from './form-inputs/txtInput'
 import { dateSelectValidation, txtFieldValidation } from '@/utils/form-validation'
@@ -11,10 +11,12 @@ import FileSelectInput from './form-inputs/FileInput'
 import { BreakPoints, ThemeOperator, generateBreakPoints } from '@/theme/theme-data'
 import axiosInstance from '@/axiosInstance'
 import { insert } from '@/lib/post'
+import { useLoading } from '@/context/lodaingContext'
 
 type Props = {}
 
 const Com = (props: Props) => {
+  const { setLoading, loading } = useLoading()
   type FieldsHere = {
     firstName: string
     isActive: boolean
@@ -120,7 +122,7 @@ const Com = (props: Props) => {
         type='button'
         onClick={async (e) => {
           e.preventDefault()
-          const data = await insert({
+          const data = await insert(setLoading, {
             title: 'foo',
             body: 'bar',
             userId: 1,

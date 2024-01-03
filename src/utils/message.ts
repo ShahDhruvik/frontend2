@@ -1,6 +1,13 @@
 // Common messages are declared here
 export enum CommonMessage {
-    Success = 'Success'
+    Success = 'Success',
+    UnAuthorized = 'You are not authorized.',
+    NotFound = 'Data not found',
+    InternalServerError = 'Internal Server Error',
+}
+export enum ContextMessage {
+    LoadingMessage = 'useLoading must be used within LoadingProvider',
+    AuthMessage = 'useAuth must be used within AuthProvider',
 }
 export enum ValidationMessage {
     CheckInput = 'Above checkbox is required*',

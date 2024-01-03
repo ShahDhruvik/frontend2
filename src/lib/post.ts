@@ -1,6 +1,7 @@
-import { apiRequest } from "@/utils/axios-api-request"
+import { apiRequest } from "@/middleware/axios-api-request"
+import { LoadingContextType } from "@/types/context-types/loading.types"
 
-export const insert = async (frmData: any) => {
-    const res = await apiRequest("POST", '/post', frmData)
+export const insert = async (setLoading: LoadingContextType['setLoading'], frmData: any, loadingProps?: LoadingContextType['loading']['loadingProps'],) => {
+    const res = await apiRequest(setLoading, "POST", '/post', frmData, loadingProps)
     console.log(res, 'response in insert')
 }

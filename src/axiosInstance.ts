@@ -5,10 +5,9 @@ const _cancelTokenQueue = new Map<string, CancelTokenSource>()
 
 // Instance
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: VITE_APP_API_URL || CONST_API_URL as string,
+  baseURL: VITE_APP_API_URL || (CONST_API_URL as string),
   timeout: 5000,
   timeoutErrorMessage: 'Timeout! something went wrong',
-
 })
 
 // Request Interceptor
@@ -28,7 +27,6 @@ axiosInstance.interceptors.request.use(
       config.cancelToken = source.token
       _cancelTokenQueue.set(cancelTokenKey, source)
     }
-
     //--------Auth------
     // const accessToken = localStorage.getItem('accessToken')
     // const refreshToken = localStorage.getItem('refreshToken')
@@ -38,17 +36,6 @@ axiosInstance.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${accessToken}`
     //   config.headers['Refresh-Token'] = `Bearer ${refreshToken}`
     // }
-
-
-    // change some global axios configurations
-    // add accessToken header before sending api
-    // const accessToken = sessionStorage.getItem("authToken");
-    // config.headers.common.Authorization = `Bearer ${accessToken}`;
-
-    // Set User Session
-    // const session = sessionStorage.getItem("client-session");
-    // config.headers.common["client-session"] = session;
-    console.log(config, 'config')
     return config
   },
   (error: any) => Promise.reject(error),
@@ -57,8 +44,6 @@ axiosInstance.interceptors.request.use(
 // Response Interceptor
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
-    // Any status code that lies within the range of 2xx cause this function to trigger
-    // Do something with response data
     // Canceling the token after the reponse
     const { cancelToken } = response.config
     if (cancelToken) {
@@ -66,14 +51,14 @@ axiosInstance.interceptors.response.use(
       const cancelTokenKey = cancelToken?.toString()
       _cancelTokenQueue.delete(cancelTokenKey as string)
     }
-    if (response.headers.newtoken) {
-      localStorage.setItem('accessToken', response.headers.newtoken)
-    }
+    //--------Auth-------
+    //New AccessToken after refresh
+    // if (response.headers.newtoken) {
+    //   localStorage.setItem('accessToken', response.headers.newtoken)
+    // }
     return response
   },
   (error: any) => {
-    // Any status codes that fall outside the range of 2xx cause this function to trigger
-    // Do something with response error
     return Promise.reject(error)
   },
 )

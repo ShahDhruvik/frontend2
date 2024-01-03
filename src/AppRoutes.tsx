@@ -10,11 +10,13 @@ import { AuthPaths, DefaultPaths, ErrorPaths } from '@/utils/route-path'
 import DashRoute from './pages/app-pages/route'
 import LoginPage from './pages/auth/login'
 import ForgotPassword from './pages/auth/forgot-password'
+import Loader from './components/Loader'
+import { useLoading } from './context/lodaingContext'
 
 type Props = {}
 
 const AppRoutes = ({}: Props) => {
-  //   const { loading } = useLoading()
+  const { loading } = useLoading()
   return (
     <>
       <Routes>
@@ -24,7 +26,7 @@ const AppRoutes = ({}: Props) => {
         <Route path={ErrorPaths.NOTFOUND} element={<NotFound />} />
         <Route path={ErrorPaths.UNAUTHORIZED} element={<UnAuthorized />} />
       </Routes>
-      {/* <Loader loading={loading} /> */}
+      <Loader loading={loading} />
     </>
   )
 }
