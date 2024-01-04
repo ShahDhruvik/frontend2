@@ -70,7 +70,7 @@ const theme: Theme = createTheme({
                     },
                     borderRadius: '4px',
                 },
-                input: { padding: 10, color: PaletteColors.black, fontWeight: '600' }
+                input: { color: PaletteColors.black, fontWeight: '600' }
             },
         },
         // MuiRadio: {
@@ -84,10 +84,6 @@ const theme: Theme = createTheme({
         // },
         MuiAutocomplete: {
             styleOverrides: {
-                popper: {
-                    boxShadow:
-                        '0px 2px 4px rgba(0, 0, 0, 0.4), 0px 7px 13px -3px rgba(0, 0, 0, 0.3), inset 0px -3px 0px rgba(0, 0, 0, 0.2)',
-                },
                 input: { color: PaletteColors.black, fontWeight: '600' }
             },
         },
