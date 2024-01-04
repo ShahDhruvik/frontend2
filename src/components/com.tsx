@@ -1,38 +1,53 @@
 import theme from '@/theme/defaultTheme'
 import { Box, Button, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler, FieldErrors, useFieldArray } from 'react-hook-form'
 import TxtInput from './form-inputs/txtInput'
-import { dateSelectValidation, txtFieldValidation } from '@/utils/form-validation'
+import {
+  dateSelectValidation,
+  searchSelectValidation,
+  txtFieldValidation,
+} from '@/utils/form-validation'
 import CheckInput from './form-inputs/checkInput'
 import AvatarFileInput from './form-inputs/AvatarInput'
 import { DateInput } from './form-inputs/DateInput'
 import FileSelectInput from './form-inputs/FileInput'
 import { BreakPoints, ThemeOperator, generateBreakPoints } from '@/theme/theme-data'
 import axiosInstance from '@/axiosInstance'
-import { insert } from '@/lib/post'
+import { getDropdown, insert } from '@/lib/post'
 import { useLoading } from '@/context/lodaingContext'
+import MultiSelectInput from './form-inputs/MultiSelectInput'
+import { SearchDropdown } from '@/types/common.types'
+import { DropdownValidationMessage } from '@/utils/message'
+import SelectInput from './form-inputs/SelectInput'
+import { selectAllDefaultValue, selectDefaultValue } from '@/utils/constants'
 
 type Props = {}
-
 const Com = (props: Props) => {
   const { setLoading, loading } = useLoading()
+  const [userList, setUserList] = useState<SearchDropdown[]>([])
+  const [userListSingleSelect, setUserListSingleSelect] = useState<SearchDropdown[]>([])
+  const getUsers = async () => {
+    const res = await getDropdown(setLoading, { dropdown: 'User' })
+    setUserList(res)
+    setUserListSingleSelect([selectDefaultValue, ...res])
+  }
+  useEffect(() => {
+    getUsers()
+  }, [])
+
   type FieldsHere = {
     firstName: string
     isActive: boolean
+    userIds: SearchDropdown[]
+    userId: SearchDropdown
     avatar: File | null
     dateField: Date | null
     uploads: {
       document: File | null
     }[]
   }
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
-  const [fileUrl, setFileUrl] = useState<
-    {
-      document: File | null
-    }[]
-  >([])
-  const { control, setValue, trigger, formState, clearErrors, setError, handleSubmit } =
+  const { control, setValue, trigger, formState, clearErrors, setError, handleSubmit, watch } =
     useForm<FieldsHere>({
       defaultValues: {
         firstName: '',
@@ -40,11 +55,23 @@ const Com = (props: Props) => {
         avatar: null,
         dateField: null,
         uploads: [],
+        userIds: [],
+        userId: selectDefaultValue,
       },
     })
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const [fileUrl, setFileUrl] = useState<
+    {
+      document: File | null
+    }[]
+  >([])
 
   const { errors } = formState
-  console.log(errors)
+  const countryIdsArray = useFieldArray({
+    control,
+    name: 'userIds',
+    rules: { validate: (val) => val.length !== 0 || DropdownValidationMessage.SelectUser },
+  })
   const onSubmitHandle: SubmitHandler<FieldsHere> = (data: FieldsHere) => {
     console.log(data)
   }
@@ -105,14 +132,36 @@ const Com = (props: Props) => {
             validation={{ isRequired: true, maxLength: 3 }}
             trigger={trigger}
           />
-          {/* <Button
+          <MultiSelectInput
+            fields={countryIdsArray.fields}
+            label='Users*'
+            name='userIds'
+            options={userList}
+            replace={countryIdsArray.replace}
+            trigger={trigger}
+            errors={errors.userIds?.root}
+            loading={loading}
+            dropdownName='User'
+          />
+          <SelectInput
+            control={control}
+            setValue={setValue}
+            validation={searchSelectValidation('User')}
+            label='User*'
+            name='userId'
+            options={userListSingleSelect}
+            trigger={trigger}
+            loading={loading}
+            dropdownName='User'
+          />
+          <Button
             color='blue'
             variant='contained'
             sx={{ color: theme.palette.white.main }}
             type='submit'
           >
             Submit
-          </Button> */}
+          </Button>
         </form>
       </Box>
       <Button

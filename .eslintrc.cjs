@@ -61,5 +61,6 @@ module.exports = {
     'consistent-return': 0,
     'spaced-comment': 0,
     'no-lonely-if': 0,
+    'react/destructuring-assignment': 0,
   },
 }

@@ -1,6 +1,6 @@
+import { selectAllDefaultValue } from "./constants"
 import { ValidationMessage } from "./message"
 
-export const acDefaultValue = { label: 'Select', _id: '00' }
 export const numberFieldValidation = (
     isRequired: boolean,
     length?: number,
@@ -56,7 +56,7 @@ export const numberFieldValidation = (
 export const searchSelectValidation = (label: string, notRequired?: boolean) => {
     return !notRequired ? {
         validate: (value: any) => {
-            return value?._id !== acDefaultValue?._id || `${ValidationMessage.Select} ${label}`
+            return value?._id !== selectAllDefaultValue?._id || `${ValidationMessage.Select} ${label}`
         },
     } : {}
 }

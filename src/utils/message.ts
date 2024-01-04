@@ -24,6 +24,9 @@ export enum ValidationMessage {
     MaxFiveCharacters = 'Maximum characters allowed : 5',
     Email = 'Please enter correct email id',
     MaxFiles = 'Maximum files allowed : ',
-    Password = 'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, one number and one special character'
+    Password = 'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, one number and one special character',
+}
+export enum DropdownValidationMessage {
+    SelectUser = "Select Users"
 }
 

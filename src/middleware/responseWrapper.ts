@@ -8,6 +8,9 @@ export const checkStatus = (status: number) => {
         console.log('validation message')
     } else if (status >= ResponseStatus.RS400 && status <= ResponseStatus.RS500) {
         switch (status) {
+            case ResponseStatus.RS400:
+                console.log('validation message')
+                break
             case ResponseStatus.RS401:
                 console.log(CommonMessage.UnAuthorized)
                 break
