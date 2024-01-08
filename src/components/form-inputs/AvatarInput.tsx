@@ -1,27 +1,34 @@
 import { Avatar, Badge, IconButton } from '@mui/material'
 import React, { Dispatch, SetStateAction, useRef } from 'react'
 import CancelIcon from '@mui/icons-material/Cancel'
-import { Control, Controller, UseFormSetValue, UseFormTrigger, UseFormWatch } from 'react-hook-form'
+import {
+  Control,
+  Controller,
+  UseFormGetValues,
+  UseFormSetValue,
+  UseFormTrigger,
+  UseFormWatch,
+} from 'react-hook-form'
 import theme from '@/theme/defaultTheme'
 import { ValidationMessage } from '@/utils/message'
 type Props = {
-  imageUrl: string | null
-  setImageUrl: Dispatch<SetStateAction<string | null>>
   setValue: UseFormSetValue<any>
   name: string
+  urlName: string
   control: Control<any> | undefined
   trigger: UseFormTrigger<any>
   required: boolean
+  getValues: UseFormGetValues<any>
 }
 
 const AvatarFileInput = ({
-  imageUrl,
-  setImageUrl,
   setValue,
   name,
   trigger,
   control,
   required,
+  urlName,
+  getValues,
 }: Props) => {
   const uploadInputRef = useRef<any>(null)
   const handleUploadClick = () => {
@@ -31,7 +38,7 @@ const AvatarFileInput = ({
     const selectedFile = event.target.files[0]
     if (selectedFile) {
       const url = URL.createObjectURL(selectedFile)
-      setImageUrl(String(url))
+      setValue(urlName, String(url))
       setValue(name, selectedFile)
       trigger(name)
     }
@@ -54,7 +61,7 @@ const AvatarFileInput = ({
           <div className='relative bg-gray-main px-5 pt-6 pb-3 max-w-min rounded-md'>
             <button
               onClick={() => {
-                setImageUrl(null)
+                setValue(urlName, '')
                 uploadInputRef.current.value = null
                 setValue(name, null)
 
@@ -69,24 +76,12 @@ const AvatarFileInput = ({
                 }}
               />
             </button>
-            {/* <Badge
-          badgeContent={
-            <IconButton
-              onClick={() => {
-                setImageUrl(null)
-                uploadInputRef.current.value = null
-              }}
-            >
-              <CancelIcon />
-            </IconButton>
-          }
-        > */}
             <Avatar
               src={
-                imageUrl
-                  ? imageUrl?.startsWith('uploads')
-                    ? `http://localhost:8000/api/common/${imageUrl}`
-                    : imageUrl
+                getValues(urlName)
+                  ? getValues(urlName)?.startsWith('uploads')
+                    ? `http://localhost:8000/api/common/${getValues(urlName)}`
+                    : getValues(urlName)
                   : ''
               }
               sx={{

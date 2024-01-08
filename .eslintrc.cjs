@@ -62,5 +62,7 @@ module.exports = {
     'spaced-comment': 0,
     'no-lonely-if': 0,
     'react/destructuring-assignment': 0,
+    'jsx-a11y/click-events-have-key-events': 0,
+    'jsx-a11y/interactive-supports-focus': 0,
   },
 }

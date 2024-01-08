@@ -1,7 +1,7 @@
 import theme from '@/theme/defaultTheme'
-import { Box, Button, TextField } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { useForm, SubmitHandler, FieldErrors, useFieldArray } from 'react-hook-form'
+import { Box, Button } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form'
 import TxtInput from './form-inputs/txtInput'
 import {
   dateSelectValidation,
@@ -12,24 +12,20 @@ import CheckInput from './form-inputs/checkInput'
 import AvatarFileInput from './form-inputs/AvatarInput'
 import { DateInput } from './form-inputs/DateInput'
 import FileSelectInput from './form-inputs/FileInput'
-import { BreakPoints, ThemeOperator, generateBreakPoints } from '@/theme/theme-data'
-import axiosInstance from '@/axiosInstance'
 import { getDropdown, insert } from '@/lib/post'
 import { useLoading } from '@/context/lodaingContext'
 import MultiSelectInput from './form-inputs/MultiSelectInput'
 import { SearchDropdown } from '@/types/common.types'
 import { DropdownValidationMessage } from '@/utils/message'
 import SelectInput from './form-inputs/SelectInput'
-import { selectAllDefaultValue, selectDefaultValue } from '@/utils/constants'
+import { selectDefaultValue } from '@/utils/constants'
 
 type Props = {}
 const Com = (props: Props) => {
   const { setLoading, loading } = useLoading()
-  const [userList, setUserList] = useState<SearchDropdown[]>([])
   const [userListSingleSelect, setUserListSingleSelect] = useState<SearchDropdown[]>([])
   const getUsers = async () => {
     const res = await getDropdown(setLoading, { dropdown: 'User' })
-    setUserList(res)
     setUserListSingleSelect([selectDefaultValue, ...res])
   }
   useEffect(() => {
@@ -42,24 +38,34 @@ const Com = (props: Props) => {
     userIds: SearchDropdown[]
     userId: SearchDropdown
     avatar: File | null
+    avatarUrl: string
     dateField: Date | null
     uploads: {
       document: File | null
     }[]
   }
-  const { control, setValue, trigger, formState, clearErrors, setError, handleSubmit, watch } =
-    useForm<FieldsHere>({
-      defaultValues: {
-        firstName: '',
-        isActive: false,
-        avatar: null,
-        dateField: null,
-        uploads: [],
-        userIds: [],
-        userId: selectDefaultValue,
-      },
-    })
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const {
+    control,
+    setValue,
+    trigger,
+    formState,
+    clearErrors,
+    setError,
+    handleSubmit,
+    watch,
+    getValues,
+  } = useForm<FieldsHere>({
+    defaultValues: {
+      firstName: '',
+      isActive: false,
+      avatar: null,
+      avatarUrl: '',
+      dateField: null,
+      uploads: [],
+      userIds: [],
+      userId: selectDefaultValue,
+    },
+  })
   const [fileUrl, setFileUrl] = useState<
     {
       document: File | null
@@ -82,7 +88,7 @@ const Com = (props: Props) => {
         sx={{
           color: theme.palette.red.main,
         }}
-        maxWidth={500}
+        maxWidth={700}
         m={2}
       >
         <form onSubmit={handleSubmit(onSubmitHandle)} className='flex flex-col gap-5 '>
@@ -114,15 +120,6 @@ const Com = (props: Props) => {
             errors={errors}
             label='active'
           />
-          <AvatarFileInput
-            imageUrl={avatarUrl}
-            name='avatar'
-            setImageUrl={setAvatarUrl}
-            setValue={setValue}
-            control={control}
-            trigger={trigger}
-            required={true}
-          />
           <FileSelectInput
             files={fileUrl}
             control={control}
@@ -132,28 +129,41 @@ const Com = (props: Props) => {
             validation={{ isRequired: true, maxLength: 3 }}
             trigger={trigger}
           />
-          <MultiSelectInput
-            fields={countryIdsArray.fields}
-            label='Users*'
-            name='userIds'
-            options={userList}
-            replace={countryIdsArray.replace}
-            trigger={trigger}
-            errors={errors.userIds?.root}
-            loading={loading}
-            dropdownName='User'
-          />
-          <SelectInput
-            control={control}
-            setValue={setValue}
-            validation={searchSelectValidation('User')}
-            label='User*'
-            name='userId'
-            options={userListSingleSelect}
-            trigger={trigger}
-            loading={loading}
-            dropdownName='User'
-          />
+          <div className='flex items-center gap-5'>
+            <AvatarFileInput
+              name='avatar'
+              urlName='avatarUrl'
+              setValue={setValue}
+              control={control}
+              trigger={trigger}
+              required={true}
+              getValues={getValues}
+            />
+            <div className='flex-1 gap-5 flex flex-col'>
+              <MultiSelectInput
+                fields={countryIdsArray.fields}
+                label='Users*'
+                name='userIds'
+                options={userListSingleSelect}
+                replace={countryIdsArray.replace}
+                trigger={trigger}
+                errors={errors.userIds?.root}
+                loading={loading}
+                dropdownName='User'
+              />
+              <SelectInput
+                control={control}
+                setValue={setValue}
+                validation={searchSelectValidation('User')}
+                label='User*'
+                name='userId'
+                options={userListSingleSelect}
+                trigger={trigger}
+                loading={loading}
+                dropdownName='User'
+              />
+            </div>
+          </div>
           <Button
             color='blue'
             variant='contained'

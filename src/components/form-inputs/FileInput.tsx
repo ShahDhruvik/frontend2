@@ -65,6 +65,7 @@ const FileSelectInput = ({
           multiple={true}
           options={[]}
           freeSolo
+          limitTags={2}
           value={files ?? []}
           renderInput={(params) => {
             const { InputLabelProps, ...rest } = params as AutocompleteRenderInputParams
