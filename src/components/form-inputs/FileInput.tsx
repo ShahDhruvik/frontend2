@@ -1,15 +1,7 @@
 import { ValidationMessage } from '@/utils/message'
 import { Autocomplete, AutocompleteRenderInputParams, Button, Chip, TextField } from '@mui/material'
 import { Dispatch, SetStateAction, useRef } from 'react'
-import {
-  Control,
-  Controller,
-  FieldError,
-  UseFormClearErrors,
-  UseFormSetError,
-  UseFormSetValue,
-  UseFormTrigger,
-} from 'react-hook-form'
+import { Control, Controller, UseFormSetValue, UseFormTrigger } from 'react-hook-form'
 
 type Props = {
   files: {
