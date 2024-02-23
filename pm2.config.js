@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'vite-react-app',
+      name: 'frontend',
       script: 'npm',
       args: 'run dev',
       interpreter: '/bin/bash',
