@@ -11,7 +11,7 @@ export default defineConfig({
   })],
   server: {
     open: true,
-    port: 5173,
+    port: 3000,
     strictPort: true,
   },
   resolve: {
