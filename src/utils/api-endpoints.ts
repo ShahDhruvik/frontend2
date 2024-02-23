@@ -4,3 +4,8 @@ export const enum DefaultEndpoints {
     MAIN = '/main',
     DIGITAL_FORM = '/digital-forms',
 }
+
+export const enum UserEndpoints {
+    listAll = "/user",
+    dropDown = "/user/dropdown"
+}
