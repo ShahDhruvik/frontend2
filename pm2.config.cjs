@@ -1,8 +1,8 @@
 module.exports = {
   apps: [
     {
-      name: 'frontend',
-      script: 'npm',
+      name: 'your-app-name',
+      script: '/home/ec2-user/.nvm/versions/node/v18.12.1/bin/npm',
       args: 'run dev',
       interpreter: '/bin/bash',
       autorestart: true,
